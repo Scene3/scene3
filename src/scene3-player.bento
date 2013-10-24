@@ -1,0 +1,48 @@
+/---------------------
+ -- scene3-player.bento
+ --
+ -- Embeddable player for scene3 worlds.
+ --
+ -- Copyright (c) 2013 by Michael St. Hippolyte
+ --
+ --/
+ 
+site scene3 [=
+
+    /---- a playing of a world ----/
+    
+    world_play(world w, styler s) [=
+        keep wrld
+        keep start_place
+        keep stylr
+        keep state
+        
+    
+        world wrld = w
+        place start_place = wrld.entrance.dest
+        styler stylr = s
+        world_state state = world_state(wrld)
+
+        
+        wrld;
+        start_place;
+        stylr;
+        state;
+
+        log(">> world_play initialized:"); 
+        log(">>     world set to " + wrld.name); 
+        log(">>     start_place set to " + start_place.name);
+        log(">>     styler set to " + stylr.name);
+    =]
+         
+  
+    /---- the player of worlds ----/
+
+    component three_player(world_play wp) [=
+        log(" >> instantiating player with world " + wp.wrld.name  + " and view of " + wp.start_place.name + " using styler " + wp.stylr.name);
+        three_viewer(scene3_scene(wp.start_place, wp.stylr));
+    =]
+    
+
+=]
+ 

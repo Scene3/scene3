@@ -1,0 +1,66 @@
+/---------------------
+ -- scene3-home-model.bento
+ --
+ -- Object model for scene3 website.
+ --
+ -- Copyright (c) 2013 by Michael St. Hippolyte
+ --
+ --/
+ 
+site scene3 [=
+    adopt three
+  
+    plaza central_plaza [=
+    
+        fixture[] fixtures = buildings
+        building[] buildings = [ central_theater,
+                                 central_library,
+                                 central_store,
+                                 central_office
+                               ]
+    
+    =]
+    
+    theater central_theater [=
+        name = "Central Theater"
+        txt = "View Scene 3 examples"
+    =]
+    
+    library central_library [=
+        name = "Central Library"
+        txt = "Get answers to questions"
+    
+    =]
+    
+    store central_store [=
+        name = "Central Store"
+        txt = "Download software"
+    =]
+    
+    store central_office [=
+        name = "Central Office"
+        txt = "Contact the people behind Scene 3"
+    =]
+  
+    world home_world [=
+        passage entrance [=
+            place dest = central_plaza 
+        =]
+
+    =]
+
+    styler home_styler [=
+        name = "home_styler"
+        version = "0.1"
+        
+        dynamic three_object apply_style(place p), (thing t, position pos) [=
+            with (p) [=
+                log("applying style to place " + p.name);
+            =] else with (t) [=
+                log("applying style to thing " + t.name);
+            =]
+        =]
+    =]
+
+=]
+ 

@@ -1,0 +1,67 @@
+/---------------------
+ -- scene3-text.bento
+ --
+ -- Output a text description of a scene3 world.
+ --
+ -- Copyright (c) 2013 by Michael St. Hippolyte
+ --
+ --/
+ 
+site scene3 [=
+
+    adopt three
+
+
+    /---- text view ----/
+    
+    text_view [=
+    
+        name = "text renderer"
+        version = "0.1"
+
+        dynamic render_title(model_object obj) [=
+            [| <h3> |]
+            if (obj isa world)         [| WORLD |]
+            else if (obj isa place)    [| PLACE |]
+            else if (obj isa passage)  [| PASSAGE |]
+            else if (obj isa actor)    [| ACTOR |]
+            else if (obj isa building) [| BUILDING |]
+            else                       [=  to_upper(obj.type); =]
+            [| : /]
+            obj.name;
+            [| </h3> |]
+        =]
+        
+        dynamic render_body(model_object obj) [=
+            text = obj.txt
+        
+            if (text) [=
+                [| <p> |]
+                text;
+                [| </p> |]
+            =]
+        =]
+    
+        render(place p, styler s) [=
+            render_place(: p :);
+        =]
+        
+        render_object(model_object obj) [=
+            log("   ...rendering " + obj.name);          
+            render_title(: obj :);
+            render_body(: obj :);
+            
+            sub;
+        =]
+        
+        render_object(p) render_place(place p) [=
+            [| <h4>******* fixtures *******</h4> |]
+            for fixture f in p.fixtures [=
+                render_object(: f :);
+            =]            
+            
+        =]
+    =]
+
+=]
+ 

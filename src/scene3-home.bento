@@ -1,0 +1,292 @@
+/---------------------
+ -- scene3-home.bento
+ --
+ -- website for scene3.com
+ --
+ -- Copyright (c) 2013 by Michael St. Hippolyte
+ --
+ --/
+ 
+site scene3 [=
+
+    adopt three
+   
+    /------------ GLOBAL ---------------/
+
+    /---- global data ----/
+    
+    /---- site initialization ----/
+
+    init [=
+        three.init;
+    =]
+
+
+    /---- global display properties ----/
+    
+    static color bg_color = "#5eeefe"
+    static color fg_color = "#333333"
+
+
+    /------------ SESSION --------------/
+
+
+    /---- initial settings ----/
+
+    initial_settings{} = { "user": "guest" }
+
+
+    /---- session data ----/
+    
+    current_user(u) = u
+
+    /---- update session data ----/
+
+
+    dynamic update_session_values(params{}) [=
+    
+        user_param = params{"user"}
+    
+        current_user(: user_param :);
+    =]
+    
+   
+    world_play current_world_play(world_play wp) = wp
+    
+
+    /---- session initialization ----/
+    
+    session_init [=
+        three.session_init;
+        update_session_values(initial_settings);
+        current_world_play(: world_play(: home_world, home_styler :) :);
+        log("session_init completed, world set to " + current_world_play.wrld.name + ", starting at " + current_world_play.start_place.name + ", using styler " + current_world_play.stylr.name);
+    =]
+
+
+    /---- site UI ----/
+
+    component base_component [= 
+        component_style [|
+            color: #fffeee;
+            background: #333333;
+       |]
+    =]
+ 
+
+    dynamic box_component info_box(title, info) [=
+        style [= 
+            component_style;
+        =]
+        
+        component_class = "info_box"
+        
+        [| <h3> |]
+        title;
+        [| </h3> |]
+        
+        info;
+    =]
+    
+
+     
+    base_component box_component [=
+        style [|
+            [= component_style; =]
+            padding: 0.25em;
+            border-style: groove;
+            border-width: 2px;
+            border-color: #339988;
+        |]
+    =]
+
+    base_component base_panel [=
+        style [|
+            [= component_style; =]
+            position: relative;
+            float: left;
+            left: 1em;
+            top: 0.5em;
+            width: 9em;
+            padding: 0.25em;
+            border-style: outset;
+            border-width: 2px;
+            border-color: #339988;
+        |]
+    =]
+
+
+    /------------ PAGES ----------------/
+
+    boolean is_home(boolean flag) = flag
+    boolean is_test(boolean flag) = flag
+    
+    page(*) basepage(params{}) [=
+
+        title [| scene3 |]
+        
+        boolean auto_style = false
+        boolean ajax_enabled = true
+       
+        links[] = [ [| href="/s3.css" rel="stylesheet" type="text/css" |] ]
+
+
+        page_init [=
+            log("page name: " + page_name);
+
+            is_home(: page_name == "" || page_name == "index" || page_name == "home" :);
+            is_test(: starts_with(page_name, "test") || ends_with(page_name, "_test") :);
+
+            if (params) [=
+                log("updating session values");
+                update_session_values(params);
+            =]
+        =]
+        
+        sub;
+    =]
+
+    basepage(*) index(params{}) [=
+    
+        [|
+            <h1>scene3</h1>
+            <h2>mission:</h2>
+            <p><strong>To enable the authoring and sharing of immersive stories and worlds. 
+            </strong></p>
+            <h2>how exactly?</h2>
+            <p><strong>scene3</strong> is an open source interactive 3D content server.  It can run as a standalone server,
+               or as a servlet on a standard web application server.  On the client side, it uses the three.js
+               javascript library to render 3D content on standard browsers. For browsers that support WebGL such
+               as Firefox and Chrome, the 3D graphics run natively, so you get video-game-level performance.
+            </p><p>But that's not the whole story.  The most important feature of <strong>scene3</strong> is that
+               it is <strong>author-centric</strong>.  The content handled by <strong>scene3</strong> is not
+               a stream of polygons and texture maps; it's a logical model, styled for 3D.  The model is not saddled
+               with polygons and texture maps; the 3D style provides them.
+            </p> 
+        |]
+
+        log("about to instantiate three_player with world set to " + current_world_play.wrld.name + ", starting at " + current_world_play.start_place.name + ", using styler " + current_world_play.stylr.name);
+        three_player(current_world_play);
+    =]
+
+
+    atest [=
+        sty [=
+            nm = "base"
+
+            nm;
+        =]
+
+        sty histy [=
+            nm = "subclass"
+        =]
+
+        w_p(sty s) [=
+            keep st
+
+            sty st = s
+
+            st;
+        =]
+         
+        v [/]
+
+        pl(w_p wp) [=
+            sty stylr = wp.st
+
+            v vw(sty s) [?]
+            vw(stylr);
+        =]
+    
+        pl(*) tpl(w_p wp) [=
+            v vw(sty s) [= 
+                s.nm;
+            =]
+            wp;
+        =]
+
+        tpl(w_p(histy));
+        "<br>w_p.st.nm: ";
+        w_p.st.nm;
+    =]
+        
+    /---- pseudofiles ----/
+
+    js [=
+        lib [=
+            three [=
+                js [=
+                    include_file(main_site.basepath + "sites/three/js/lib/three.js");
+                =]
+            =]
+            stats [=
+                js [=
+                    include_file(main_site.basepath + "sites/three/js/lib/stats.js");
+                =]
+            =]
+        =]
+    =]
+    
+    s3 [=
+         dynamic css [|
+
+/* Global CSS for scene3 */
+ 
+html, body {
+    height: 100%;
+}
+        
+body {        
+    font-family: Helvetica, Arial, Geneva, sans-serif;
+    font-weight: normal;
+    font-size: 12pt;
+    color: [= fg_color; =];
+    background-color: [= if (is_home) [| #ddffff |] else [= bg_color; =] =];
+    margin: [= if (is_home) [| 16px |] else [| 0 |] =];
+    overflow: hidden;
+}
+
+#info {
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    padding: 5px;
+}
+
+
+a:link { 
+    color: #dd0000;
+}
+
+a:visited { 
+    color: #aa00dd;
+}
+
+.menu_link {
+    font-family: Helvetica, Arial, Geneva, sans-serif;
+    font-weight: bold;
+    font-size: 12pt;
+    color: [= fg_color; =];
+    text-decoration: none;
+}
+
+.info_box {
+    font-size: 9pt;
+    margin: 2pt 0.25em 4pt 0.25em;
+    padding: 4px 6px 4px 6px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #77aaaa;
+}
+.info_box h3 {
+    font-size 9pt;
+    font-weight: bold;
+    color: #ffffff;
+    text-align: center;
+}
+
+        |]
+    =]
+
+=]
+ 

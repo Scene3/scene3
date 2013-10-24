@@ -1,0 +1,84 @@
+/---------------------
+ -- scene3-engine.bento
+ --
+ -- Animation of and interaction with scene3 world.
+ --
+ -- Copyright (c) 2013 by Michael St. Hippolyte
+ --
+ --/
+ 
+site scene3 [=
+
+    /---- default settings ----/
+    
+    static int DEFAULT_MILLIS_PER_TICK = 100
+    
+   
+    /---- base types and interfaces ----/
+
+    
+    clock(int mpt) [=
+    
+        int millis_per_tick = mpt ? mpt : DEFAULT_MILLIS_PER_TICK
+    
+        boolean stopped(boolean flag) = flag
+        
+        dynamic stop [=
+            eval(stopped(: true :));
+        =]
+        
+        dynamic start [=
+            eval(stopped(: false :));
+
+            [++ run; ++]
+        =]
+         
+        run [=
+            for long t from 0 until stopped [=
+                tick(t);
+                sleep(millis_per_tick);
+            =] 
+        =]
+    
+        tick(long t) [?]        
+    =]
+        
+  
+    
+
+    world_state(world w) [=
+        keep world
+        keep place_states
+
+        my world = w
+        
+        /---- state changes ----/
+        place_state{} place_states = { for place p in world.places [= p.name: place_state(p) =] }        
+        
+    =]
+    
+    place_state(place p) [=
+        keep place
+        keep actor_positions
+        keep prop_positions
+    
+        my place = p
+        
+        actor[] actors = array.copy(place.actors)
+        position{} actor_positions = table.copy(place.actor_positions)
+
+        prop[] props = array.copy(place.props)
+        position{} prop_positions = table.copy(place.prop_positions)
+
+        dynamic locate(actor a, position loc),(prop p, position loc) [=
+            with (a) [=
+                a.loc(: location(place, loc) :);
+            =] else with (p) [=
+                table.set(prop_positions, p.name, loc);
+            =]
+        =]
+    
+    =]
+
+=]
+ 

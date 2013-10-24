@@ -1,0 +1,64 @@
+/---------------------
+ -- scene3-view.bento
+ --
+ -- A rendering of a scene3 world.
+ --
+ -- Copyright (c) 2013 by Michael St. Hippolyte
+ --
+ --/
+ 
+site scene3 [=
+
+    adopt three
+
+
+    /---- 3D viewer ----/ 
+
+    three_component(*) three_viewer(scene sc),(params{}) [=
+        id = "tc"
+        color bgcolor = "#0077ff"
+
+        include_scripts[] = [ "/js/lib/three.js", "/js/lib/stats.js" ]
+    
+        sub_script [|
+            stats = new Stats();
+            stats.domElement.style.position = 'absolute';
+            stats.domElement.style.top = '0px';
+            stats.domElement.style.left = (canvasWidth - 80) + 'px';
+            [= canvas_name; =].appendChild(stats.domElement);
+        |]
+
+        js_function post_render [=
+            body [|
+                stats.update();
+            |]
+        =]
+
+        log("  >> instantiating three_viewer with scene " + sc.type);
+            
+    =]        
+
+
+    scene scene3_scene(place p, styler s) [=
+
+        three_object[] objs = [
+
+            s.apply_style(p),
+        
+            for fixture f in p.fixtures [=
+                s.apply_style(f, p.fixture_positions{f.name})
+            =],
+            
+            for prop pp in p.props [=
+                s.apply_style(pp, p.prop_positions{pp.name})
+            =],
+
+            for actor a in p.actors [=
+                s.apply_style(a, p.actor_positions{a.name})
+            =]
+        ]
+        scripts[] = []
+    =]
+
+=]
+ 

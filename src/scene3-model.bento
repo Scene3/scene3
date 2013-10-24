@@ -1,0 +1,302 @@
+/---------------------
+ -- scene3-model.bento
+ --
+ -- Object model for scene3.
+ --
+ -- Copyright (c) 2013 by Michael St. Hippolyte
+ --
+ --/
+ 
+site scene3 [=
+    
+   
+    /---- base types and interfaces ----/
+
+    common [=
+        name = owner.type
+    =]
+
+    /** a specific position relative to a place **/
+    position [/]
+    
+    /** common positions **/
+    common, position common_position [/]
+   
+    static common_position center [/]    /-- (x, y, z) == (0, 0, 0) --/
+    static common_position top [/]       /-- max y --/
+    static common_position bottom [/]    /-- min y --/
+    static common_position right [/]     /-- max x --/
+    static common_position left [/]      /-- min x --/
+    static common_position front [/]     /-- max z --/
+    static common_position back [/]      /-- min z --/
+    
+    /** a direction **/
+    direction [/]
+    
+    /** common directions **/
+    common, direction common_direction [/] 
+    
+    static common_direction up [/]
+    static common_direction down [/]
+    
+    static common_direction north [/]
+    static common_direction ne [/]
+    static common_direction east [/]
+    static common_direction se [/]
+    static common_direction south [/]
+    static common_direction sw [/]
+    static common_direction west [/]
+    static common_direction nw [/]
+
+    /** a dimension **/
+    dimension [/]
+    
+    dimension width [/]
+    dimension height [/]
+    dimension depth [/]
+
+    /---- compound values ----/
+
+    location(place p, position pos) [=
+        my place = p
+        my position = pos
+    =]
+
+    extension(width w, height h, depth d) [=
+    
+    
+    =]
+
+
+    viewpoint(position pos, direction dir) [=
+        my position = pos
+        my direction = dir
+    =]        
+
+    viewpoint(pos, dir) vantage(place p, position pos, direction dir) [=
+        my place = p
+    =]
+
+
+    /---- world object hierarchy ----/       
+
+    /** base class for all objects in a world **/
+    model_object [=
+        keep name
+        keep txt
+        keep wid
+        keep ht
+        keep dpth
+        
+        name = owner.type
+        txt [?]
+        width wid [?]
+        height ht [?]
+        depth dpth [?]
+
+        [| <h3> |]
+        name;
+        [| </h3><p><em> |]
+        txt;
+        [| </em></p> |]
+    =]
+
+    transition [=
+    
+    =]
+
+    model_object, transition passage [=
+        txt = "A passage to " + dest.name 
+        
+        width wid = "1m"
+        height ht = "1m"
+        depth dpth = "1mm"
+        
+        place dest [?]
+    =]
+    
+    model_object thing [=
+    
+    =]
+    
+    /** a fixture is a thing that permanently belongs to a particular place.
+      **/ 
+    thing fixture [=
+        txt = "A fixture, i.e. a thing that is permanently attached to a particular place."
+    
+    =]
+
+    /** a prop is a thing that may be moved from location to location, but
+      * doesn't move itself.
+      **/ 
+    thing prop [=
+        txt = "A prop, i.e. a thing that can be moved around."    
+    =]
+
+    /** an actor is a thing that controls its own behaviors, typically including
+      * the ability to move from location to location, within the constraints of 
+      * its environment.
+      **/
+    thing actor [=
+        txt = "A person."
+        boolean is_user_controllable = false
+        location loc(location l) = l
+    =]
+    
+    actor audient [=
+        txt = "A participant."
+        boolean is_user_controllable = true
+    
+    =]
+
+    audient guest_audient [=
+        name = "You"
+    
+        txt = "A visitor."
+    =]
+
+    layout [=
+        keep set_position by name in owner.positions
+        
+        dynamic position calc_position(fixture f) [?]
+        
+        position set_position(fixture f) [=
+            name = f.name
+            
+            calc_position(f);
+        =]
+    =]
+    
+
+    model_object place [=
+ 
+        txt = "A place."
+
+        width wid = "100m"
+        height ht = "20m"
+        depth dpth = "100m"
+
+        /** the initial viewpoint when arrriving at this place.  The default is
+          * at the center of the place looking east.
+          **/
+        viewpoint starting_viewpoint = viewpoint(center, east)
+
+        /** a place may contain fixtures **/
+        fixture[] fixtures = []
+        position{} fixture_positions = {}
+        
+        /** a place may contain props **/
+        prop[] props = []
+        position{} prop_positions = {}
+        
+        /** a place may contain actors **/
+        actor[] actors = []
+        dynamic position{} actor_positions = { for actor a in actors [= if (a.loc.place == owner) [= a.name: a.loc.position =] =] } 
+
+        /** connections from this place to other places **/
+        passage[] passages = []
+
+        /** the logic that determines the initial position of things **/
+      
+    =]
+    
+    
+    ambience [=
+    
+    =]
+    
+    
+    place world [=
+        txt = "The world."
+        wid = "1000km"
+        ht = "10km"
+        dpth = "1000km"
+
+        /** required: the starting place **/
+        passage entrance [?]
+        
+        dynamic prop[] props = [ for place p in places [= for prop pp in p.props [= pp =] =] ]
+        dynamic location{} prop_locations = { for place p in places [= for prop pp in p.props [= pp.name: location(p, pp.prop_positions{pp.name}) =] =] }
+
+        dynamic actor[] actors = [ for place p in places [= for actor a in p.actors [= a =] =] ]
+        dynamic location{} actor_locations = { for place p in places [= for actor a in p.actors [= a.name: location(p, pp.actor_positions{a.name}) =] =] }
+
+        ambience ambi [/]
+
+    =]
+
+    /---- base fixtures ----/
+
+    fixture structure [=
+        txt = "A structure."
+    
+        place interior [=
+        
+        =] 
+    =]
+    
+    structure building [=
+        txt = "A building."
+
+        wid = "20m"
+        ht = "10m"
+        dpth = "20m"
+
+        room[] rooms = []
+    =]
+    
+    structure room [=
+        txt = "A room."
+
+        wid = "8m"
+        ht = "3m"
+        dpth = "8m"
+    
+        wall[] walls = []
+        my floor [/]
+        my ceiling [/]
+    =]
+
+   
+    structure wall [=
+        txt = "A wall."
+        
+        door[] doors = []
+        window[] windows = []
+    =]
+
+    structure floor [=
+        txt = "The floor."
+    
+    =]
+    
+    structure ceiling [=
+        txt = "The ceiling."
+    
+    =]
+    
+    fixture aperture [=
+        txt = "An opening."
+    
+    =]
+    
+    aperture door [=
+        txt = "A door."
+    =]
+            
+    aperture window [=
+        txt = "A window." 
+        
+    =]
+    
+    place clearing [=
+        txt = "A clearing."
+    
+        width clear_wid = wid
+        depth clear_dpth = dpth
+        
+        position clear_pos = center
+    
+    =]
+=]
+ 

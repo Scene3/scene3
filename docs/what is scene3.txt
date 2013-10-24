@@ -1,0 +1,7 @@
+scene3
+
+scene3 is a scalable, simple, customizable, secure, robust, open source server for navigable three dimensional worlds.  It leverages the latest advances in client technology (OpenGL support in browsers) and Internet standards (HTML5, CSS3) and open source libraries (three.js) to deliver a high-quality, high-performance experience to users without the need for high-end hardware or special software.  
+
+
+
+

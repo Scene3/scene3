@@ -1,0 +1,11 @@
+3SS -- 3D style sheets
+
+This is a proposal for style definitions for 3D content.  3SS styles are applied to logical models and determine their 3D appearance.  They consist of sets of attributes, and fall into several categories:
+
+  -- geometry: shapes, faces, vertices, scaling, rotation, distortion
+  -- materials: colors, texture maps, transparency, reflectivity
+  -- lighting: type and color
+  -- cameras: type and frustum
+
+
+

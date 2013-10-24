@@ -1,0 +1,69 @@
+/---------------------
+ -- scene3-model-town.bento
+ --
+ -- Town-themed domain model for scene3.
+ --
+ -- Copyright (c) 2013 by Michael St. Hippolyte
+ --
+ --/
+ 
+site scene3 [=
+
+    
+    /---- common base structures for town ----/
+   
+    building house [=
+        txt = "A house."
+    =]
+
+    building church [=
+        txt = "A church."
+    =]    
+
+    building factory [=
+        txt = "A factory."
+    =]    
+
+    building garage [=
+        txt = "A garage."
+    =]    
+
+    building hospital [=
+        txt = "A hospital."
+    =]    
+
+    building library [=
+        txt = "A library."
+    =]    
+
+    building office [=
+        txt = "An office."
+    =]    
+
+    building museum [=
+        txt = "A museum."
+    =]    
+
+    building restaurant [=
+        txt = "A restaurant."
+    =]    
+
+    building school [=
+        txt = "A school."
+    =]    
+
+    building store [=
+        txt = "A store."
+    =]    
+
+    building theater [=
+        txt = "A theater."
+    =]    
+
+    clearing plaza [=
+        txt = "A plaza."
+    =]
+  
+
+=]
+ 

@@ -1,0 +1,62 @@
+/---------------------
+ -- scene3-style.bento
+ --
+ -- 3D styling support for scene3.
+ --
+ -- Copyright (c) 2013 by Michael St. Hippolyte
+ --
+ --/
+ 
+site scene3 [=
+    
+    adopt three
+   
+    /---- base types and interfaces ----/
+
+    styler [=
+        name [?]
+        version [?]
+        
+        dynamic three_object apply_style(place p), (thing t, position pos) [?]
+    =]
+
+
+    /---- related sets of attributes ----/
+
+    /** base class for styles of visual rendering **/
+    visual_style [=
+        my color [/]
+    =]
+    
+    visual_style lighting_style [=
+    
+    =]
+    
+    
+    visual_style material_style [=
+        texture_map [/]
+        float opacity = 1.0
+                
+    =]
+    
+    
+    /** base class for styles related to spatial extension **/
+    spatial_style [=
+        /-- dimensions --/
+        width wid [?]
+        height ht [?]
+        depth dpth [?]
+    =]
+    
+    geometry [/]
+    geometry cube_geometry [/]
+    geometry sphere_geometry [/]
+    geometry mesh_geometry [/]
+    
+    spatial_style geometry_style [=
+    
+        my geometry [/]
+    =]
+    
+    
+=]
