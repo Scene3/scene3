@@ -216,12 +216,12 @@ site scene3 [=
         lib [=
             three [=
                 js [=
-                    include_file(main_site.basepath + "sites/three/js/lib/three.js");
+                    include_file("../3p/lib/three.js");
                 =]
             =]
             stats [=
                 js [=
-                    include_file(main_site.basepath + "sites/three/js/lib/stats.js");
+                    include_file("../3p/lib/stats.min.js");
                 =]
             =]
         =]
