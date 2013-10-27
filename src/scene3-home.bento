@@ -170,6 +170,11 @@ site scene3 [=
     =]
 
 
+    basepage(*) full_screen(params{}) [=
+        
+        three_player(current_world_play);
+    =]
+
     atest [=
         sty [=
             nm = "base"
@@ -243,7 +248,20 @@ body {
     color: [= fg_color; =];
     background-color: [= if (is_home) [| #ddffff |] else [= bg_color; =] =];
     margin: [= if (is_home) [| 16px |] else [| 0 |] =];
+    width: 100%;
+    height: 100%;
     overflow: hidden;
+}
+
+#three_player {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+}
+
+#tc {
+    width: 100%;
+    height: 100%;
 }
 
 #info {

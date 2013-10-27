@@ -15,7 +15,7 @@ site scene3 [=
     /---- 3D viewer ----/ 
 
     three_component(*) three_viewer(scene sc),(params{}) [=
-        id = "tc"
+        canvas_id = "tc"
         color bgcolor = "#0077ff"
 
         include_scripts[] = [ "/js/lib/three.js", "/js/lib/stats.js" ]
@@ -25,7 +25,7 @@ site scene3 [=
             stats.domElement.style.position = 'absolute';
             stats.domElement.style.top = '0px';
             stats.domElement.style.left = (canvasWidth - 80) + 'px';
-            [= canvas_name; =].appendChild(stats.domElement);
+            [= canvas_container; =].appendChild(stats.domElement);
         |]
 
         js_function post_render [=
