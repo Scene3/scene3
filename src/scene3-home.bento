@@ -119,7 +119,9 @@ site scene3 [=
     /------------ PAGES ----------------/
 
     boolean is_home(boolean flag) = flag
+    boolean is_help(boolean flag) = flag
     boolean is_test(boolean flag) = flag
+        
     
     page(*) basepage(params{}) [=
 
@@ -135,6 +137,7 @@ site scene3 [=
             log("page name: " + page_name);
 
             is_home(: page_name == "" || page_name == "index" || page_name == "home" :);
+            is_help(: starts_with(page_name, "help") || ends_with(page_name, "_help") :);
             is_test(: starts_with(page_name, "test") || ends_with(page_name, "_test") :);
 
             if (params) [=
@@ -254,9 +257,14 @@ body {
 }
 
 #three_player {
-    position: absolute;
-    left: 50%;
-    top: 50%;
+    if (!is_help) [|
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -100;
+    |]
 }
 
 #tc {
