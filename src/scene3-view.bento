@@ -16,7 +16,6 @@ site scene3 [=
 
     three_component(*) three_viewer(scene sc),(params{}) [=
         canvas_id = "tc"
-        color bgcolor = "#0077ff"
 
         include_scripts[] = [ "/js/lib/three.js", "/js/lib/stats.js" ]
     

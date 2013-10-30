@@ -24,8 +24,8 @@ site scene3 [=
 
     /---- global display properties ----/
     
-    static color bg_color = "#5eeefe"
-    static color fg_color = "#333333"
+    static color bg_color = "#001133"
+    static color fg_color = "#BBBBBB"
 
 
     /------------ SESSION --------------/
@@ -152,6 +152,7 @@ site scene3 [=
     basepage(*) index(params{}) [=
     
         [|
+            <div class="overlay">
             <h1>scene3</h1>
             <h2>mission:</h2>
             <p><strong>To enable the authoring and sharing of immersive stories and worlds. 
@@ -166,6 +167,7 @@ site scene3 [=
                a stream of polygons and texture maps; it's a logical model, styled for 3D.  The model is not saddled
                with polygons and texture maps; the 3D style provides them.
             </p> 
+            </div>
         |]
 
         log("about to instantiate three_player with world set to " + current_world_play.wrld.name + ", starting at " + current_world_play.start_place.name + ", using styler " + current_world_play.stylr.name);
@@ -249,22 +251,33 @@ body {
     font-weight: normal;
     font-size: 12pt;
     color: [= fg_color; =];
-    background-color: [= if (is_home) [| #ddffff |] else [= bg_color; =] =];
-    margin: [= if (is_home) [| 16px |] else [| 0 |] =];
+    background-color: [= bg_color; =];
+    margin: 0;
     width: 100%;
     height: 100%;
+    min-width: 100%;
+    min-height: 100%;
     overflow: hidden;
 }
 
+.overlay {
+    position: absolute;
+    top: 1em;
+    left: 1em;
+    width: 40em;
+    padding: 2em;
+    color: #FFFFAA;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.15);
+}
+
 #three_player {
-    if (!is_help) [|
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -100;
-    |]
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
 }
 
 #tc {
