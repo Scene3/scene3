@@ -99,19 +99,37 @@ site scene3 [=
             border-color: #339988;
         |]
     =]
+    
+    panel_switcher_function [|
+        function switchPanels(id1, id2) {
+            if (id1) {
+                document.getElementById(id1).hide();
+            }
+            if (id2) {
+                document.getElementById(id1).show();
+            }
+        }    
+    |]    
 
-    base_component base_panel [=
-        style [|
-            [= component_style; =]
-            position: relative;
-            float: left;
-            left: 1em;
-            top: 0.5em;
-            width: 9em;
-            padding: 0.25em;
-            border-style: outset;
-            border-width: 2px;
-            border-color: #339988;
+    
+    component back_next_panel(id_back, id_this, id_next) [=
+        component_class = "bottom_panel" 
+
+        back_button_id = "back_to_" + id_back 
+        next_button_id = "next_to_" + id_next 
+        
+        if (id_back) [|
+            <div id="back_to_[= id_back; =]" class="panel_button"
+                 style="float: left" onclick="switchPanels([= id_this; =], [= id_back; =])">back</div>
+        |] else [|
+            <div class="panel_button disabled_text" style="float: left">back</div>
+        |]
+        
+        if (id_next) [|
+            <div id="next_to_[= id_next; =]" class="panel_button" 
+                 style="float: right" onclick="switchPanels([= id_this; =], [= id_next; =])">next</div>
+        |] else [|
+            <div class="panel_button disabled_text" style="float: right">next</div>
         |]
     =]
 
@@ -146,6 +164,10 @@ site scene3 [=
             =]
         =]
         
+        script [=
+           panel_switcher_function;
+        =]
+        
         sub;
     =]
 
@@ -153,20 +175,33 @@ site scene3 [=
     
         [|
             <div class="overlay">
-            <h1>scene3</h1>
-            <h2>mission:</h2>
-            <p><strong>To enable the authoring and sharing of immersive stories and worlds. 
-            </strong></p>
-            <h2>how exactly?</h2>
-            <p><strong>scene3</strong> is an open source interactive 3D content server.  It can run as a standalone server,
-               or as a servlet on a standard web application server.  On the client side, it uses the three.js
-               javascript library to render 3D content on standard browsers. For browsers that support WebGL such
-               as Firefox and Chrome, the 3D graphics run natively, so you get video-game-level performance.
-            </p><p>But that's not the whole story.  The most important feature of <strong>scene3</strong> is that
-               it is <strong>author-centric</strong>.  The content handled by <strong>scene3</strong> is not
-               a stream of polygons and texture maps; it's a logical model, styled for 3D.  The model is not saddled
-               with polygons and texture maps; the 3D style provides them.
-            </p> 
+
+            <div id="panel1" class="overlay_panel">
+                <h1>scene3</h1>
+                <h2>mission:</h2>
+                <p><strong>To enable the authoring and sharing of immersive stories and worlds. 
+                </strong></p>
+                <h2>how exactly?</h2>
+                <p><strong>scene3</strong> is an open source interactive 3D content server.  It can run as a standalone server,
+                   or as a servlet on a standard web application server.  On the client side, it uses the three.js
+                   javascript library and the WebGL graphics api to render video-game-quality 3D content on modern browsers.
+                </p>
+                [= back_next_panel(null, "panel1", "panel2"); =]         
+            </div>
+
+            <div id="panel2" class="overlay_panel">
+                <h1>scene3</h1>
+                <h2>mission:</h2>
+                <p>To enable the authoring of immersive stories <strong>by writers as well as artists</strong>.
+                </p>
+                <h2>how exactly?</h2>
+                <p><strong>scene3</strong> separates content from style.  scene3 worlds consist of 
+                   abstract spatial models (ASMs) combined with 3D styles, which provide the polygons,
+                   colors, texture maps and other graphical data needed to render the scene.
+                </p> 
+                [= back_next_panel("panel1", "panel2", null); =]         
+            </div>
+
             </div>
         |]
 
@@ -180,46 +215,6 @@ site scene3 [=
         three_player(current_world_play);
     =]
 
-    atest [=
-        sty [=
-            nm = "base"
-
-            nm;
-        =]
-
-        sty histy [=
-            nm = "subclass"
-        =]
-
-        w_p(sty s) [=
-            keep st
-
-            sty st = s
-
-            st;
-        =]
-         
-        v [/]
-
-        pl(w_p wp) [=
-            sty stylr = wp.st
-
-            v vw(sty s) [?]
-            vw(stylr);
-        =]
-    
-        pl(*) tpl(w_p wp) [=
-            v vw(sty s) [= 
-                s.nm;
-            =]
-            wp;
-        =]
-
-        tpl(w_p(histy));
-        "<br>w_p.st.nm: ";
-        w_p.st.nm;
-    =]
-        
     /---- pseudofiles ----/
 
     js [=
@@ -262,13 +257,37 @@ body {
 
 .overlay {
     position: absolute;
-    top: 1em;
-    left: 1em;
-    width: 40em;
+    width: 100%;
     padding: 2em;
-    color: #FFFFAA;
     z-index: 100;
+}
+
+.overlay_panel {
+    position: absolute;
+    padding: 2em;
     background: rgba(255, 255, 255, 0.15);
+    color: #FFFFAA;
+    transition: display 3s;
+    -webkit-transition: display 3s; /* Safari */
+}
+
+.bottom_panel {
+    position: relative;
+    bottom: 0;
+    height: 24pt;
+    padding: 8pt 0 0 0;
+    color: #FFFFFF;
+}
+
+.panel_button {
+    padding: 4pt 4em;
+    background: #000000;
+    font-weight: bold;
+    color: #FFFFFF;    
+}    
+
+.disabled_text {
+    color: #888888;
 }
 
 #three_player {
@@ -278,6 +297,20 @@ body {
     width: 100%;
     height: 100%;
     z-index: 0;
+}
+
+#panel1 {  
+    display: block;
+    top: 2em;
+    left: 1em;
+    width: 32em;
+}
+
+#panel2 {
+    display: none;
+    top: 6em;
+    right: 11em;
+    width: 32em;
 }
 
 #tc {
