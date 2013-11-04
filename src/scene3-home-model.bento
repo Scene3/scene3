@@ -39,28 +39,22 @@ site scene3 [=
     
     store central_office [=
         name = "Central Office"
-        txt = "Contact the people behind Scene 3"
+        txt = "Contact the people behind scene3"
     =]
   
     world home_world [=
         passage entrance [=
             place dest = central_plaza 
         =]
-
     =]
 
-    styler home_styler [=
+    styler(home_style_sheet) home_styler [=
         name = "home_styler"
         version = "0.1"
-        
-        dynamic three_object apply_style(place p), (thing t, position pos) [=
-            with (p) [=
-                log("applying style to place " + p.name);
-            =] else with (t) [=
-                log("applying style to thing " + t.name);
-            =]
-        =]
-    =]
+     =]
+
+     style_sheet home_style_sheet = {}
+
 
 =]
  

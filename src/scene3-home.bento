@@ -18,7 +18,14 @@ site scene3 [=
     /---- site initialization ----/
 
     init [=
+        scene sc = scene3_scene(home_world, home_styler)
+    
         three.init;
+        
+        // temporary for debugging
+        for three_object o in sc.objs [=
+            o;
+        =]
     =]
 
 
@@ -101,18 +108,22 @@ site scene3 [=
     =]
     
     panel_switcher_function [|
-        function switchPanels(id1, id2) {
-            if (id1) {
-                document.getElementById(id1).hide();
+        function switchPanels(idFrom, idTo) {
+            if (idFrom !== undefined) {
+                var elFrom = document.getElementById(idFrom);
+                elFrom.style.opacity = 0;
+                elFrom.style.visibility = "hidden";
             }
-            if (id2) {
-                document.getElementById(id1).show();
+            if (idTo !== undefined) {
+                var elTo = document.getElementById(idTo);
+                elTo.style.opacity = 1;
+                elTo.style.visibility = "visible";
             }
         }    
     |]    
 
     
-    component back_next_panel(id_back, id_this, id_next) [=
+    dynamic component back_next_panel(id_back, id_this, id_next) [=
         component_class = "bottom_panel" 
 
         back_button_id = "back_to_" + id_back 
@@ -120,14 +131,16 @@ site scene3 [=
         
         if (id_back) [|
             <div id="back_to_[= id_back; =]" class="panel_button"
-                 style="float: left" onclick="switchPanels([= id_this; =], [= id_back; =])">back</div>
+                 style="float: left; cursor: pointer;"
+                 onclick="switchPanels('[= id_this; =]', '[= id_back; =]'); return false;">back</div>
         |] else [|
             <div class="panel_button disabled_text" style="float: left">back</div>
         |]
         
         if (id_next) [|
             <div id="next_to_[= id_next; =]" class="panel_button" 
-                 style="float: right" onclick="switchPanels([= id_this; =], [= id_next; =])">next</div>
+                 style="float: right; cursor: pointer;"
+                 onclick="switchPanels('[= id_this; =]', '[= id_next; =]'); return false;">next</div>
         |] else [|
             <div class="panel_button disabled_text" style="float: right">next</div>
         |]
@@ -191,13 +204,14 @@ site scene3 [=
 
             <div id="panel2" class="overlay_panel">
                 <h1>scene3</h1>
-                <h2>mission:</h2>
-                <p>To enable the authoring of immersive stories <strong>by writers as well as artists</strong>.
+                <h2>advantage:</h2>
+                <p><strong>scene3</strong> makes the authoring of immersive stories and interactive 3D content
+                   <strong>simpler, cleaner and more productive</strong>.
                 </p>
                 <h2>how exactly?</h2>
-                <p><strong>scene3</strong> separates content from style.  scene3 worlds consist of 
-                   abstract spatial models (ASMs) combined with 3D styles, which provide the polygons,
-                   colors, texture maps and other graphical data needed to render the scene.
+                <p>With <strong>AWMs</strong> (abstract world models) and <strong>3SS</strong> (3D style sheets). By separating the
+                   conceptual content from visual realization, <strong>scene3</strong> lets writers focus on the story and artists
+                   on the visuals.
                 </p> 
                 [= back_next_panel("panel1", "panel2", null); =]         
             </div>
@@ -265,10 +279,10 @@ body {
 .overlay_panel {
     position: absolute;
     padding: 2em;
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(136, 136, 136, 0.25);
     color: #FFFFAA;
-    transition: display 3s;
-    -webkit-transition: display 3s; /* Safari */
+    transition: opacity 1.5s, visibility 2s;
+    -webkit-transition: opacity 1.5s, visibility 2s; /* Safari */
 }
 
 .bottom_panel {
@@ -304,13 +318,17 @@ body {
     top: 2em;
     left: 1em;
     width: 32em;
+    opacity: 1;
+    visibility: visible;
 }
 
 #panel2 {
-    display: none;
+    display: block;
     top: 6em;
     right: 11em;
     width: 32em;
+    opacity: 0;
+    visibility: hidden;
 }
 
 #tc {

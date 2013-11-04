@@ -8,8 +8,9 @@
  --/
  
 site scene3 [=
-    
-   
+
+    adopt three    
+  
     /---- base types and interfaces ----/
 
     common [=
@@ -63,8 +64,6 @@ site scene3 [=
     =]
 
     extension(width w, height h, depth d) [=
-    
-    
     =]
 
 
@@ -94,6 +93,17 @@ site scene3 [=
         height ht [?]
         depth dpth [?]
 
+        dynamic three_object apply_style(styler sty, position pos) [=
+            if (pos) [=
+                log("~~~~~ applying style to " + owner.type + " at postion " + pos);
+            =] else [=
+                log("~~~~~ applying style to " + owner.type);
+            =]
+            green_cube;
+        
+        =]
+
+
         [| <h3> |]
         name;
         [| </h3><p><em> |]
@@ -102,7 +112,6 @@ site scene3 [=
     =]
 
     transition [=
-    
     =]
 
     model_object, transition passage [=
@@ -115,15 +124,20 @@ site scene3 [=
         place dest [?]
     =]
     
-    model_object thing [=
+
+    /** special purpose model objects **/
+
+    model_object ground [/]
+    model_object sky [/]
     
+    /** a thing is an object with spatial extension and visual properties **/
+    model_object thing [=
     =]
     
     /** a fixture is a thing that permanently belongs to a particular place.
       **/ 
     thing fixture [=
         txt = "A fixture, i.e. a thing that is permanently attached to a particular place."
-    
     =]
 
     /** a prop is a thing that may be moved from location to location, but
@@ -181,6 +195,11 @@ site scene3 [=
           **/
         viewpoint starting_viewpoint = viewpoint(center, east)
 
+        /** a place generally has ground and sky **/
+        
+        my ground [/]
+        my sky [/]
+
         /** a place may contain fixtures **/
         fixture[] fixtures = []
         position{} fixture_positions = {}
@@ -208,9 +227,9 @@ site scene3 [=
     
     place world [=
         txt = "The world."
-        wid = "1000km"
-        ht = "10km"
-        dpth = "1000km"
+        width wid = "1000km"
+        height ht = "10km"
+        depth dpth = "1000km"
 
         /** required: the starting place **/
         passage entrance [?]
@@ -298,5 +317,16 @@ site scene3 [=
         position clear_pos = center
     
     =]
+
+
+    phong_material green_material [=
+        undecorated color = 0x33CC33
+    =]
+           
+    mesh(cube_geometry(10, 10, 10), green_material) green_cube [=
+        position pos = position(0, 2, 0)
+    =]
+
+
 =]
  

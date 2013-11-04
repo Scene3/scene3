@@ -13,13 +13,37 @@ site scene3 [=
    
     /---- base types and interfaces ----/
 
-    styler [=
-        name [?]
-        version [?]
+    style_set [=
+        /-- general attributes --/
+        my position [?]
+        my rotation [?]
+        float scale [?]
+        color [?]
         
-        dynamic three_object apply_style(place p), (thing t, position pos) [?]
+        /-- for visible objects --/
+        my geometry [?]
+        my material [?]
+        boolean visibility [?]
+        
     =]
 
+    style_set{} style_sheet = {}
+
+    styler(style_sheet s_s), (ss_filename) [=
+        name [?]
+        version [?]
+
+        style_sheet ss = (s_s ? s_s : load_style_sheet(ss_filename));
+
+        dynamic style_set style_for_object(model_object mo) [=
+        
+        =]
+        
+    =]
+
+    style_sheet load_style_sheet(filename) [=
+    
+    =]
 
     /---- related sets of attributes ----/
 
@@ -48,15 +72,9 @@ site scene3 [=
         depth dpth [?]
     =]
     
-    geometry [/]
-    geometry cube_geometry [/]
-    geometry sphere_geometry [/]
-    geometry mesh_geometry [/]
-    
     spatial_style geometry_style [=
     
         my geometry [/]
     =]
-    
-    
+
 =]

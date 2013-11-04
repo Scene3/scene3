@@ -40,20 +40,22 @@ site scene3 [=
 
     scene scene3_scene(place p, styler s) [=
 
-        three_object[] objs = [
+        dynamic three_object[] objs = [
 
-            s.apply_style(p),
+            p.sky.apply_style(s),
         
+            p.ground.apply_style(s),
+            
             for fixture f in p.fixtures [=
-                s.apply_style(f, p.fixture_positions{f.name})
+                f.apply_style(s, p.fixture_positions{f.name})
             =],
             
             for prop pp in p.props [=
-                s.apply_style(pp, p.prop_positions{pp.name})
+                pp.apply_style(s, p.prop_positions{pp.name})
             =],
 
             for actor a in p.actors [=
-                s.apply_style(a, p.actor_positions{a.name})
+                a.apply_style(s, p.actor_positions{a.name})
             =]
         ]
         scripts[] = []
