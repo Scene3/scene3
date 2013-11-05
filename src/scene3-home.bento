@@ -18,12 +18,11 @@ site scene3 [=
     /---- site initialization ----/
 
     init [=
-        scene sc = scene3_scene(home_world, home_styler)
-    
+   
         three.init;
         
         // temporary for debugging
-        for three_object o in sc.objs [=
+        for three_object o in scene3_scene(home_world, home_styler).objs [=
             o;
         =]
     =]
