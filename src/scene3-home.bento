@@ -18,13 +18,14 @@ site scene3 [=
     /---- site initialization ----/
 
     init [=
+        three_object objs = scene3_scene(home_world, home_styler).objs
    
         three.init;
         
         // temporary for debugging
         for three_object o in scene3_scene(home_world, home_styler).objs [=
-            o;
-        =]
+            log(" o.three_class: " + o.three_class + "   o.type: " + o.type); 
+       =]
     =]
 
 
