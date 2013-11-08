@@ -40,10 +40,9 @@ site scene3 [=
 
     scene scene3_scene(place p, styler s) [=
 
-        place plc = p
-        styler stylr = s    
+        three_object[] objs = generate_objs(p, s)
         
-        dynamic three_object[] objs = [
+        dynamic three_object[] generate_objs(place plc, styler stylr) = [
 
             plc.sky.apply_style(stylr),
         
