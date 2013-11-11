@@ -93,17 +93,6 @@ site scene3 [=
         height ht [?]
         depth dpth [?]
 
-        dynamic three_object apply_style(styler sty, position pos) [=
-            if (pos) [=
-                log("~~~~~ applying style to " + owner.type + " at postion " + pos);
-            =] else [=
-                log("~~~~~ applying style to " + owner.type);
-            =]
-            green_cube;
-        
-        =]
-
-
         [| <h3> |]
         name;
         [| </h3><p><em> |]
@@ -224,15 +213,21 @@ site scene3 [=
     
     =]
     
+    place empty_place [/]
     
     place world [=
         txt = "The world."
         width wid = "1000km"
         height ht = "10km"
         depth dpth = "1000km"
+        
+        
+        place[] places = [ empty_place ]
 
-        /** required: the starting place **/
-        passage entrance [?]
+        /** by default, the entrance leads to the first place **/
+        passage entrance [=
+            dest = places[0]
+        =]
         
         dynamic prop[] props = [ for place p in places [= for prop pp in p.props [= pp =] =] ]
         dynamic location{} prop_locations = { for place p in places [= for prop pp in p.props [= pp.name: location(p, pp.prop_positions{pp.name}) =] =] }
@@ -317,16 +312,5 @@ site scene3 [=
         position clear_pos = center
     
     =]
-
-
-    phong_material green_material [=
-        undecorated color = 0x33CC33
-    =]
-           
-    mesh(cube_geometry(10, 10, 10), green_material) green_cube [=
-        position pos = position(0, 2, 0)
-    =]
-
-
 =]
  

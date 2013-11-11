@@ -38,30 +38,78 @@ site scene3 [=
     =]        
 
 
-    scene scene3_scene(place p, styler s) [=
+    scene scene3_scene(place plc, styler stylr) [=
 
-        three_object[] objs = generate_objs(p, s)
-        
-        dynamic three_object[] generate_objs(place plc, styler stylr) = [
+        model_object[] model_objs = [
+            plc.sky,
+            plc.ground,
 
-            plc.sky.apply_style(stylr),
-        
-            plc.ground.apply_style(stylr),
-            
             for fixture f in plc.fixtures [=
-                f.apply_style(stylr, plc.fixture_positions{f.name})
+                f
             =],
             
             for prop pp in plc.props [=
-                pp.apply_style(stylr, plc.prop_positions{pp.name})
+                pp
             =],
 
             for actor a in plc.actors [=
-                a.apply_style(stylr, plc.actor_positions{a.name})
+                a
             =]
         ]
+
+        three_object[] objs = [
+            for model_object mo in model_objs and int i from 0 [=
+                styled_obj(stylr, mo, make_var_name(mo.name, i))
+            =]
+        ]
+
         scripts[] = []
     =]
+
+    int{} seq_for_name = {}
+    
+    dynamic make_var_name(nm, int seq) [=
+        int nm_seq = seq_for_name{var_name}
+        
+        var_name = replace(nm, " ", "_")
+
+        if (seq == 0) [=
+            table.clear(seq_for_name);
+            table.set(seq_for_name, var_name, seq);
+            var_name;
+            log("         ::::: make_var_name(" + nm + ", " + i + ") = " + var_name);    
+            
+        =] else if (nm_seq != seq) [=
+            table.set(seq_for_name, (var_name + seq), seq);
+            (var_name + seq); 
+            log("         ::::: make_var_name(" + nm + ", " + i + ") = " + (var_name + seq));    
+
+        =] else [=
+            table.set(seq_for_name, var_name, seq);
+            var_name;
+            log("         ::::: make_var_name(" + nm + ", " + i + ") = " + var_name);    
+        =]
+    
+    =]
+  
+
+    dynamic three_object styled_obj(styler sty, model_object m, obj_name) [=
+        style_set ss = sty.style_for_obj(m)
+        three_class = "GreenCube"
+        name = obj_name
+
+        green_cube;
+    =]
+
+
+    phong_material green_material [=
+        undecorated color = 0x33CC33
+    =]
+           
+    mesh(cube_geometry(10, 10, 10), green_material) green_cube [=
+        position pos = position(0, 2, 0)
+    =]
+
 
 =]
  

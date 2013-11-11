@@ -35,7 +35,7 @@ site scene3 [=
 
         style_sheet ss = (s_s ? s_s : load_style_sheet(ss_filename));
 
-        dynamic style_set style_for_object(model_object mo) [=
+        dynamic style_set style_for_obj(model_object mo) [=
         
         =]
         

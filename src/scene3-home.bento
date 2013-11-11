@@ -18,13 +18,15 @@ site scene3 [=
     /---- site initialization ----/
 
     init [=
-        three_object objs = scene3_scene(home_world, home_styler).objs
-   
         three.init;
         
         // temporary for debugging
-        for three_object o in scene3_scene(home_world, home_styler).objs [=
-            log(" o.three_class: " + o.three_class + "   o.type: " + o.type); 
+        for model_object mo in scene3_scene(home_world.entrance.dest, home_styler).model_objs [=
+            log(" mo.type: " + mo.type);
+        =]
+
+        for three_object o in scene3_scene(home_world.entrance.dest, home_styler).objs [=
+            log(" o.three_class: " + o.three_class + "   o.name: " + o.name + "   o.pos: " + o.pos); 
        =]
     =]
 

@@ -43,9 +43,7 @@ site scene3 [=
     =]
   
     world home_world [=
-        passage entrance [=
-            place dest = central_plaza 
-        =]
+        place[] places = [ central_plaza ]
     =]
 
     styler(home_style_sheet) home_styler [=
