@@ -21,12 +21,12 @@ site scene3 [=
         three.init;
         
         // temporary for debugging
-        for model_object mo in scene3_scene(home_world.entrance.dest, home_styler).model_objs [=
-            log(" mo.type: " + mo.type);
-        =]
+        //for model_object mo in scene3_scene(home_world.entrance.dest, home_styler).model_objs [=
+        //    log(" mo.type: " + mo.type);
+        //=]
 
         for three_object o in scene3_scene(home_world.entrance.dest, home_styler).objs [=
-            log(" o.three_class: " + o.three_class + "   o.name: " + o.name + "   o.pos: " + o.pos); 
+            log(" o.name: " + o.name); 
        =]
     =]
 
