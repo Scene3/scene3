@@ -1,0 +1,59 @@
+/---------------------
+ -- scene3-model-defaults.bento
+ --
+ -- Default objects for scene3.
+ --
+ -- Copyright (c) 2013 by Michael St. Hippolyte
+ --
+ --/
+ 
+site scene3 [=
+
+    adopt three    
+  
+    ground default_ground [/]
+    sky default_sky [/]
+    
+    /** default generic thing (any object with spatial extension and visual properties) **/
+    thing default_thing [/]
+   
+    /** a fixture is a thing that permanently belongs to a particular place.
+      **/ 
+    fixture default_fixture [/]
+
+    /** a prop is a thing that may be moved from location to location, but
+      * doesn't move itself.
+      **/ 
+    prop default_prop [/]
+    
+    /** an actor is a thing that controls its own behaviors, typically including
+      * the ability to move from location to location, within the constraints of 
+      * its environment.
+      **/
+    actor default_actor [/]
+    
+    audient default_audient [/]
+
+    layout default_layout [=
+        dynamic position calc_position(fixture f) [?]
+    =]
+    
+    
+    building default_building [/]
+    
+    room default_room [=
+        wid = "8m"
+        ht = "3m"
+        dpth = "8m"
+    
+        wall[] walls = []
+        my floor [/]
+        my ceiling [/]
+    =]
+
+   
+    door default_door [/]
+
+    window default_window [/]
+=]
+ 

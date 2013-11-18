@@ -73,11 +73,11 @@ site scene3 [=
     dynamic make_var_name(nm, int seq) [=
         int nm_seq = seq_for_name{var_name}
         
-        var_name = replace(nm, " ", "_")
+        var_name =  nm  /--- replace(nm, " ", "_") ---/
 
         if (seq == 0) [=
-            table.clear(seq_for_name);
-            table.set(seq_for_name, var_name, seq);
+       /---     table.clear(seq_for_name);
+            table.set(seq_for_name, var_name, seq); ---/
             var_name;
             log("         ::::: make_var_name(" + nm + ", " + i + ") = " + var_name);    
             

@@ -18,7 +18,11 @@ site scene3 [=
     /---- site initialization ----/
 
     init [=
+        place starting_place = home_world.entrance.dest;
+    
         three.init;
+        
+        //log(" %%%%%% place: " + starting_place.name);
         
         // temporary for debugging
         //for model_object mo in scene3_scene(home_world.entrance.dest, home_styler).model_objs [=
@@ -27,7 +31,7 @@ site scene3 [=
 
         for three_object o in scene3_scene(home_world.entrance.dest, home_styler).objs [=
             log(" o.name: " + o.name); 
-       =]
+        =]
     =]
 
 
