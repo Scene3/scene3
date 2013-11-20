@@ -226,7 +226,7 @@ site scene3 [=
 
         /** by default, the entrance leads to the first place **/
         passage entrance [=
-            dest = places[0]
+            place dest = places[0]
         =]
         
         dynamic prop[] props = [ for place p in places [= for prop pp in p.props [= pp =] =] ]
