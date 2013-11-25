@@ -76,20 +76,20 @@ site scene3 [=
         var_name =  nm  /--- replace(nm, " ", "_") ---/
 
         if (seq == 0) [=
-       /---     table.clear(seq_for_name);
-            table.set(seq_for_name, var_name, seq); ---/
+            table.clear(seq_for_name);
+            table.set(seq_for_name, var_name, seq);
             var_name;
-            log("         ::::: make_var_name(" + nm + ", " + i + ") = " + var_name);    
+            log("         ::::: make_var_name(" + nm + ", " + seq + ") = " + var_name);    
             
         =] else if (nm_seq != seq) [=
             table.set(seq_for_name, (var_name + seq), seq);
             (var_name + seq); 
-            log("         ::::: make_var_name(" + nm + ", " + i + ") = " + (var_name + seq));    
+            log("         ::::: make_var_name(" + nm + ", " + seq + ") = " + (var_name + seq));    
 
         =] else [=
             table.set(seq_for_name, var_name, seq);
             var_name;
-            log("         ::::: make_var_name(" + nm + ", " + i + ") = " + var_name);    
+            log("         ::::: make_var_name(" + nm + ", " + seq + ") = " + var_name);    
         =]
     
     =]

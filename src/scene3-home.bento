@@ -17,21 +17,28 @@ site scene3 [=
     
     /---- site initialization ----/
 
+    place current_place(place p) = p
+
     init [=
         place starting_place = home_world.entrance.dest;
     
         three.init;
         
-        //log(" %%%%%% place: " + starting_place.name);
+        current_place(: starting_place :);
+        
+        //log(" %%%%%% place: " + current_place.name);
         
         // temporary for debugging
         //for model_object mo in scene3_scene(home_world.entrance.dest, home_styler).model_objs [=
         //    log(" mo.type: " + mo.type);
         //=]
 
-        for three_object o in scene3_scene(home_world.entrance.dest, home_styler).objs [=
-            log(" o.name: " + o.name); 
-        =]
+        //for three_object o in scene3_scene(home_world.entrance.dest, home_styler).objs [=
+        //    log(" o.name: " + o.name); 
+        //=]
+        
+        three_object o = scene3_scene(current_place, home_styler).objs[0];
+        log(" %%%%%% o.name: " + o.name); 
     =]
 
 
@@ -208,7 +215,7 @@ site scene3 [=
                 [= back_next_panel(null, "panel1", "panel2"); =]         
             </div>
 
-            <div id="panel2" class="overlay_panel">
+            <div id="panel2" class="overlay_panel initially_hidden">
                 <h1>scene3</h1>
                 <h2>advantage:</h2>
                 <p><strong>scene3</strong> makes the authoring of immersive stories and interactive 3D content
@@ -289,6 +296,10 @@ body {
     color: #FFFFAA;
     transition: opacity 1.5s, visibility 2s;
     -webkit-transition: opacity 1.5s, visibility 2s; /* Safari */
+}
+
+.initially_hidden {
+
 }
 
 .bottom_panel {
