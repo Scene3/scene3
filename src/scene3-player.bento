@@ -13,34 +13,33 @@ site scene3 [=
     
     world_play(world w, styler s) [=
         keep wrld
-        keep start_place
         keep stylr
-        keep state
+        keep current_place
+        keep current_state
         
-    
         world wrld = w
-        place start_place = wrld.entrance.dest
         styler stylr = s
-        world_state state = world_state(wrld)
+        place current_place(place p) = p
+        world_state current_state(world_state ws) = ws
 
-        
         wrld;
-        start_place;
         stylr;
-        state;
+        
+        current_place(: wrld.entrance.dest :);
+        current_state(: world_state(wrld) :);
 
         log(">> world_play initialized:"); 
         log(">>     world set to " + wrld.name); 
-        log(">>     start_place set to " + start_place.name);
         log(">>     styler set to " + stylr.name);
+        log(">>     current_place: " + current_place.name);
     =]
          
   
     /---- the player of worlds ----/
 
     component three_player(world_play wp) [=
-        log(" >> instantiating player with world " + wp.wrld.name  + " and view of " + wp.start_place.name + " using styler " + wp.stylr.name);
-        three_viewer(scene3_scene(wp.start_place, wp.stylr));
+        log(" >> instantiating player with world " + wp.wrld.name  + " and view of " + wp.current_place.name + " using styler " + wp.stylr.name);
+        three_viewer(scene3_scene(wp.current_place, wp.stylr));
     =]
     
 

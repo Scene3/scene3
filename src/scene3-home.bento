@@ -26,19 +26,19 @@ site scene3 [=
         
         current_place(: starting_place :);
         
-        //log(" %%%%%% place: " + current_place.name);
+        log(" %%%%%% place: " + current_place.name);
         
         // temporary for debugging
-        //for model_object mo in scene3_scene(home_world.entrance.dest, home_styler).model_objs [=
-        //    log(" mo.type: " + mo.type);
-        //=]
+        for model_object mo in scene3_scene(home_world.entrance.dest, home_styler).model_objs [=
+            log("   %%%% mo.type: " + mo.type);
+        =]
 
-        //for three_object o in scene3_scene(home_world.entrance.dest, home_styler).objs [=
-        //    log(" o.name: " + o.name); 
-        //=]
+        for three_object o in scene3_scene(home_world.entrance.dest, home_styler).objs [=
+            log("   %%%% o.name: " + o.name); 
+        =]
         
-        three_object o = scene3_scene(current_place, home_styler).objs[0];
-        log(" %%%%%% o.name: " + o.name); 
+        three_object so = scene3_scene(current_place, home_styler).objs[0];
+        log(" %%%%%% so.name: " + so.name); 
     =]
 
 
