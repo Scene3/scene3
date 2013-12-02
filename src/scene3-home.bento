@@ -17,29 +17,9 @@ site scene3 [=
     
     /---- site initialization ----/
 
-    place current_place(place p) = p
-
-    init [=
-        place starting_place = home_world.entrance.dest;
-    
+     init [=
         three.init;
-        
-        current_place(: starting_place :);
-        
-        log(" %%%%%% place: " + current_place.name);
-        
-        // temporary for debugging
-        for model_object mo in scene3_scene(home_world.entrance.dest, home_styler).model_objs [=
-            log("   %%%% mo.type: " + mo.type);
-        =]
-
-        for three_object o in scene3_scene(home_world.entrance.dest, home_styler).objs [=
-            log("   %%%% o.name: " + o.name); 
-        =]
-        
-        three_object so = scene3_scene(current_place, home_styler).objs[0];
-        log(" %%%%%% so.name: " + so.name); 
-    =]
+     =]
 
 
     /---- global display properties ----/
@@ -80,7 +60,7 @@ site scene3 [=
         three.session_init;
         update_session_values(initial_settings);
         current_world_play(: world_play(: home_world, home_styler :) :);
-        log("session_init completed, world set to " + current_world_play.wrld.name + ", starting at " + current_world_play.start_place.name + ", using styler " + current_world_play.stylr.name);
+        log("session_init completed, world set to " + current_world_play.wrld.name + ", starting at " + current_world_play.current_place.name + ", using styler " + current_world_play.stylr.name);
     =]
 
 
@@ -232,7 +212,7 @@ site scene3 [=
             </div>
         |]
 
-        log("about to instantiate three_player with world set to " + current_world_play.wrld.name + ", starting at " + current_world_play.start_place.name + ", using styler " + current_world_play.stylr.name);
+        log("about to instantiate three_player with world set to " + current_world_play.wrld.name + ", starting at " + current_world_play.current_place.name + ", using styler " + current_world_play.stylr.name);
         three_player(current_world_play);
     =]
 

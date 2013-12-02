@@ -25,7 +25,7 @@ site scene3 [=
         wrld;
         stylr;
         
-        current_place(: wrld.entrance.dest :);
+        current_place(: wrld.starting_place :);
         current_state(: world_state(wrld) :);
 
         log(">> world_play initialized:"); 

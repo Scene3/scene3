@@ -224,10 +224,10 @@ site scene3 [=
         
         place[] places = [ empty_place ]
 
-        /** by default, the entrance leads to the first place **/
-        passage entrance [=
-            place dest = places[0]
-        =]
+        /** by default, the first place listed in the places array is
+         ** the starting place
+         **/
+        place starting_place = places[0]
         
         dynamic prop[] props = [ for place p in places [= for prop pp in p.props [= pp =] =] ]
         dynamic location{} prop_locations = { for place p in places [= for prop pp in p.props [= pp.name: location(p, pp.prop_positions{pp.name}) =] =] }
