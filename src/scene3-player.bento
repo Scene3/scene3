@@ -28,6 +28,10 @@ site scene3 [=
         current_place(: wrld.starting_place :);
         current_state(: world_state(wrld) :);
 
+current_place.name;
+
+        log(current_place.name);
+        
         log(">> world_play initialized:"); 
         log(">>     world set to " + wrld.name); 
         log(">>     styler set to " + stylr.name);
