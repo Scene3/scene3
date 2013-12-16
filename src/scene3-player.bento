@@ -19,13 +19,14 @@ site scene3 [=
         
         world wrld = w
         styler stylr = s
+
         place current_place(place p) = p
         world_state current_state(world_state ws) = ws
 
         wrld;
         stylr;
         
-        current_place(: wrld.starting_place :);
+        current_place(: w.starting_place :);
         current_state(: world_state(wrld) :);
 
 current_place.name;
