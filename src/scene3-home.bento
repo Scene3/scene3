@@ -18,6 +18,7 @@ site scene3 [=
     /---- site initialization ----/
 
      init [=
+        three.set_logging_level(three.LOG_DEBUG);
         three.init;
      =]
 
