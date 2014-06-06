@@ -43,7 +43,6 @@ site scene3 [=
         model_object[] model_objs = [
             plc.sky
      
-     /---------------------------
             plc.ground,
 
             for fixture f in plc.fixtures [=
@@ -56,7 +55,7 @@ site scene3 [=
 
             for actor a in plc.actors [=
                 a
-            =]   -----/
+            =]
         ]
 
         three_object[] objs = [

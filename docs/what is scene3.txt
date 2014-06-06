@@ -1,6 +1,23 @@
-scene3
+Scene3
 
-scene3 is a scalable, simple, customizable, secure, robust, open source server for navigable three dimensional worlds.  It leverages the latest advances in client technology (OpenGL support in browsers) and Internet standards (HTML5, CSS3) and open source libraries (three.js) to deliver a high-quality, high-performance experience to users without the need for high-end hardware or special software.  
+Scene3 develops technology for an immersive web. Scene3's Sceneserver is a simple, customizable open source server for navigable and sharable three dimensional content.  It leverages the latest advances in browser technology (WebGL), Internet standards (HTML5) and open source libraries (three.js) to deliver a high-quality, high-performance 3D experience to users.  Scene3's Scenemix is a site built on Sceneserver that allows users to build and publish their own 3D worlds.  Scenemix users can also interconnect their worlds using portals, which are bits of Sceneserver magic that support seamless navigation to external scenes -- hyperlinking 3D-style.
+
+Scene3 sees an opportunity arising from a confluence of principles and trends.  First, the principles:
+
+Principle 1: Let Users Do the Work.  Under the right conditions, users will generate their own content, and a lot of it.
+
+Principle 2: User Sites Rule.  User-uploaded content sites grow faster and bigger than commissioned content sites.
+
+Principle 3: The Medium is the Market.  When a new medium of communications catches the fancy of a wide audience, being in a position to define and dominate that medium presents an extraordinary business opportunity.
+
+Principle 4: The Messenger is the Medium.  In the past, a medium was defined by hardware -- the physical properties of the communications channel (light waves, radio waves, paper) and the devices at one end or the other of the communications channel (cameras, microphones, printing presses; televisions, radios and reading glasses).  Today, the underlying communications channel is universal -- the internet -- and a medium is an abstraction, a set of features and capabilities implemented on top of the communications channel that a site or application offers, as determined by programmers, not physical laws.
+
+
+
+Trend 1: 
+
+
+
 
 
 

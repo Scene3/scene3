@@ -59,9 +59,9 @@ site scene3 [=
     
     session_init [=
         three.session_init;
-        update_session_values(initial_settings);
         current_world_play(: world_play(: home_world, home_styler :) :);
-        log("session_init completed, world set to " + current_world_play.wrld.name + ", starting at " + current_world_play.current_place.name + ", using styler " + current_world_play.stylr.name);
+        update_session_values(initial_settings);
+        log("session_init completed, starting at " + current_world_play.current_place.name + ", world set to " + current_world_play.wrld.name + ", using styler " + current_world_play.stylr.name);
     =]
 
 
