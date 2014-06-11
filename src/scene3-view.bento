@@ -41,7 +41,7 @@ site scene3 [=
     scene scene3_scene(place plc, styler stylr) [=
 
         model_object[] model_objs = [
-            plc.sky
+            plc.sky,
      
             plc.ground,
 

@@ -12,24 +12,14 @@ site scene3 [=
     /---- a playing of a world ----/
     
     world_play(world w, styler s) [=
-
         keep: world wrld = w
         keep: styler stylr = s
-
         keep: place current_place(place p) = p
         keep: world_state current_state(world_state ws) = ws
 
         wrld;
         stylr;
         current_place(: wrld.starting_place :);
-
-        log(".> current_place.name " + current_place.name);
-        
-        log(".> wrld.starting_place.name " + wrld.starting_place.name);
-        log(".> w.starting_place.name " + w.starting_place.name);
-        log(".> current_place.name " + current_place.name);
-
-
         current_state(: world_state(wrld) :);
         
         log(">> world_play initialized:"); 
