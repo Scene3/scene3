@@ -59,8 +59,8 @@ site scene3 [=
     /---- compound values ----/
 
     location(place p, position pos) [=
-        my place = p
-        my position = pos
+        this place = p
+        this position = pos
     =]
 
     extension(width w, height h, depth d) [=
@@ -68,12 +68,12 @@ site scene3 [=
 
 
     viewpoint(position pos, direction dir) [=
-        my position = pos
-        my direction = dir
+        this position = pos
+        this direction = dir
     =]        
 
     viewpoint(pos, dir) vantage(place p, position pos, direction dir) [=
-        my place = p
+        this place = p
     =]
 
 
@@ -81,17 +81,11 @@ site scene3 [=
 
     /** base class for all objects in a world **/
     model_object [=
-        keep name
-        keep txt
-        keep wid
-        keep ht
-        keep dpth
-        
-        name = owner.type
-        txt [?]
-        width wid [?]
-        height ht [?]
-        depth dpth [?]
+        keep: name = owner.type
+        keep: txt [?]
+        keep: width wid [?]
+        keep: height ht [?]
+        keep: depth dpth [?]
 
         [| <h3> |]
         name;
@@ -127,6 +121,10 @@ site scene3 [=
       **/ 
     thing fixture [=
         txt = "A fixture, i.e. a thing that is permanently attached to a particular place."
+
+        /-- a fixture has a per-determined, fixed position --/
+        
+        this position [?]
     =]
 
     /** a prop is a thing that may be moved from location to location, but
@@ -186,8 +184,8 @@ site scene3 [=
 
         /** a place generally has ground and sky **/
         
-        my ground [/]
-        my sky [/]
+        this ground [/]
+        this sky [/]
 
         /** a place may contain fixtures **/
         fixture[] fixtures = []
@@ -267,8 +265,8 @@ site scene3 [=
         dpth = "8m"
     
         wall[] walls = []
-        my floor [/]
-        my ceiling [/]
+        this floor [/]
+        this ceiling [/]
     =]
 
    
